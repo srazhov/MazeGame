@@ -6,13 +6,11 @@ namespace MazeGame.Factories;
 
 public static class ViewRendererFactory
 {
-    public static IViewRenderer CreateView()
+    public static IViewRenderer CreateView(IScreen mazeScreen, IScreen settingsScreen)
     {
-        var mazeScreen = new MazeScreen();
-
         var options = new StackedOption[] {
             new("New Game", (screen) => screen.AddNewScreen(mazeScreen)),
-            new("Settings", (screen) => {}),
+            new("Settings", (screen) => screen.AddNewScreen(settingsScreen)),
         };
 
         var mainScreen = new StackedOptionsViewScreen(options);

@@ -3,9 +3,11 @@ using MazeGame.Game.Settings;
 
 var settings = new MazeSettings(10, 10);
 
-var maze = MazeFactory.CreateMaze(settings);
+var mazeScreen = MazeFactory.CreateMazeScreen(settings);
 
-var view = ViewRendererFactory.CreateView();
+var mazeSettingsScreen = SettingsViewFactory.CreateSettingsView(settings);
+
+var view = ViewRendererFactory.CreateView(mazeScreen, mazeSettingsScreen);
 view.Run();
 
-Console.WriteLine("Application exit performed by a user");
+Console.WriteLine("Application exit was performed by a user");
