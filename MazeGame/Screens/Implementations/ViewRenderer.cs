@@ -30,10 +30,14 @@ public class ViewRenderer : IViewRenderer
                 Screens.Pop();
             }
 
-            if (!string.IsNullOrEmpty(screenTxt))
+            if (newScreen == null && !string.IsNullOrEmpty(screenTxt))
             {
                 Console.WriteLine(screenTxt);
                 lastPressedKey = Console.ReadKey(true).Key;
+            }
+            else
+            {
+                lastPressedKey = null;
             }
         }
     }
