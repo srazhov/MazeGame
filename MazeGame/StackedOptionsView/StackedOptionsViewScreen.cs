@@ -1,5 +1,4 @@
 
-using System.ComponentModel;
 using System.Text;
 using MazeGame.Screens.Implementations;
 
@@ -16,14 +15,8 @@ public class StackedOptionsViewScreen : ScreenBase
         SelectedScreenIndex = 0;
     }
 
-    public override string DrawScreen(ConsoleKey? pressedKey)
+    protected override string DrawScreenMain(ConsoleKey? pressedKey, out bool needsToRedrawScene)
     {
-        base.DrawScreen(pressedKey);
-        if (ScreenRemoved)
-        {
-            return string.Empty;
-        }
-
         switch (pressedKey)
         {
             case ConsoleKey.UpArrow when SelectedScreenIndex > 0:
@@ -34,6 +27,13 @@ public class StackedOptionsViewScreen : ScreenBase
                 break;
             case ConsoleKey.Enter:
                 Options[SelectedScreenIndex].OnOptionSelected(this);
+                break;
+            default:
+                if (FirstRenderFinished)
+                {
+                    needsToRedrawScene = false;
+                    return string.Empty;
+                }
                 break;
         }
 
@@ -51,6 +51,7 @@ public class StackedOptionsViewScreen : ScreenBase
             }
         }
 
+        needsToRedrawScene = true;
         return sb.ToString();
     }
 }

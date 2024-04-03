@@ -10,28 +10,39 @@ public class ViewRenderer : IViewRenderer
         Screens.Push(screen);
     }
 
+    private int counter = 0;
+
     public void Run()
     {
         ConsoleKey? lastPressedKey = null;
         while (Screens.Count > 0 && !Console.KeyAvailable)
         {
-            Console.Clear();
-            var screenTxt = Screens.Peek().DrawScreen(lastPressedKey);
+            var lastScreen = Screens.Peek();
+            var screenTxt = lastScreen.DrawScreen(lastPressedKey, out var needsToRedraw);
 
-            var newScreen = Screens.Peek().OnScreenAdded();
+            var newScreen = lastScreen.OnScreenAdded();
             if (newScreen != null)
             {
                 Screens.Push(newScreen);
             }
 
-            if (Screens.Peek().OnScreenRemoved())
+            var screenRemoved = lastScreen.OnScreenRemoved();
+            if (screenRemoved)
             {
                 Screens.Pop();
             }
 
-            if (newScreen == null && !string.IsNullOrEmpty(screenTxt))
+            if (newScreen == null && !screenRemoved)
             {
-                Console.WriteLine(screenTxt);
+                if (needsToRedraw)
+                {
+                    counter++;
+                    Console.Clear();
+                    Console.WriteLine(screenTxt);
+                    Console.WriteLine();
+                    Console.WriteLine($"Screen updated times: {counter}");
+                }
+
                 lastPressedKey = Console.ReadKey(true).Key;
             }
             else

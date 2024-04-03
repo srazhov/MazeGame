@@ -7,24 +7,17 @@ namespace MazeGame.Screens.Implementations;
 public class MazeScreen : ScreenBase
 {
     private IMaze Maze { get; }
-    private bool FirstRenderFinished { get; set; }
 
     public MazeScreen(IMaze maze)
     {
         Maze = maze;
-        FirstRenderFinished = false;
     }
 
-    public override string DrawScreen(ConsoleKey? pressedKey)
+    protected override string DrawScreenMain(ConsoleKey? pressedKey, out bool needsToRedrawScene)
     {
-        base.DrawScreen(pressedKey);
-        if (ScreenRemoved)
-        {
-            return string.Empty;
-        }
-
         if (FirstRenderFinished && !Maze.TryMovePlayer(pressedKey))
         {
+            needsToRedrawScene = false;
             return string.Empty;
         }
 
@@ -39,7 +32,7 @@ public class MazeScreen : ScreenBase
             sb.AppendLine();
         }
 
-        FirstRenderFinished = true;
+        needsToRedrawScene = true;
         return sb.ToString();
     }
 }

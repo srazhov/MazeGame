@@ -2,7 +2,7 @@ namespace MazeGame.Screens;
 
 public interface IScreen
 {
-    string DrawScreen(ConsoleKey? pressedKey);
+    string DrawScreen(ConsoleKey? pressedKey, out bool needsToRedrawScene);
 
     void AddNewScreen(IScreen screen);
 

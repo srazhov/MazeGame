@@ -63,16 +63,16 @@ public class Maze : IMaze
         int newY = Player.Y;
         switch (key)
         {
-            case ConsoleKey.LeftArrow when Player.X > 0:
+            case ConsoleKey.LeftArrow when newX > 0:
                 newX--;
                 break;
-            case ConsoleKey.UpArrow when Player.Y > 0:
+            case ConsoleKey.UpArrow when newY > 0:
                 newY--;
                 break;
-            case ConsoleKey.DownArrow when Player.Y < CurrentMaze.GetLength(0):
+            case ConsoleKey.DownArrow when newY + 1 < CurrentMaze.GetLength(0):
                 newY++;
                 break;
-            case ConsoleKey.RightArrow when Player.X < CurrentMaze.GetLength(1):
+            case ConsoleKey.RightArrow when newX + 1 < CurrentMaze.GetLength(1):
                 newX++;
                 break;
             default:
