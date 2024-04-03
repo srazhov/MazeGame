@@ -6,17 +6,16 @@ public abstract class CellBase
 
     public int Y { get; set; }
 
-    public char Symbol { get; private set; }
+    public char Symbol { get; protected set; }
 
     public virtual bool TryStep()
     {
         return true;
     }
 
-    protected CellBase(int x, int y, char symbol)
+    protected CellBase(int x, int y)
     {
         X = x;
         Y = y;
-        Symbol = symbol;
     }
 }

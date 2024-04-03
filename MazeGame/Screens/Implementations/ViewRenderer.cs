@@ -16,7 +16,6 @@ public class ViewRenderer : IViewRenderer
         while (Screens.Count > 0 && !Console.KeyAvailable)
         {
             Console.Clear();
-
             var screenTxt = Screens.Peek().DrawScreen(lastPressedKey);
 
             var newScreen = Screens.Peek().OnScreenAdded();

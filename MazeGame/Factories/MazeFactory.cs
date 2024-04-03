@@ -9,7 +9,7 @@ public static class MazeFactory
 {
     public static IScreen CreateMazeScreen(MazeSettings mazeSettings)
     {
-        var maze = new Maze();
+        var maze = new Maze(mazeSettings);
 
         return new MazeScreen(maze);
     }

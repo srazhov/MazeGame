@@ -6,11 +6,13 @@ namespace MazeGame.Screens.Implementations;
 
 public class MazeScreen : ScreenBase
 {
-    private IMaze Maze { get; set; }
+    private IMaze Maze { get; }
+    private bool FirstRenderFinished { get; set; }
 
     public MazeScreen(IMaze maze)
     {
         Maze = maze;
+        FirstRenderFinished = false;
     }
 
     public override string DrawScreen(ConsoleKey? pressedKey)
@@ -21,19 +23,23 @@ public class MazeScreen : ScreenBase
             return string.Empty;
         }
 
-        var maze = Maze.GetCurrentMaze();
-
-        var sb = new StringBuilder(maze.GetLength(0) * maze.GetLength(1));
-        for (int i = 0; i < maze.GetLength(0); i++)
+        if (FirstRenderFinished && !Maze.TryMovePlayer(pressedKey))
         {
-            for (int k = 0; k < maze.GetLength(1); k++)
+            return string.Empty;
+        }
+
+        var sb = new StringBuilder(Maze.XSize() * Maze.YSize());
+        for (int y = 0; y < Maze.YSize(); y++)
+        {
+            for (int x = 0; x < Maze.XSize(); x++)
             {
-                sb.Append(maze[i, k].Symbol);
+                sb.Append(Maze[x, y].Symbol);
             }
 
             sb.AppendLine();
         }
 
+        FirstRenderFinished = true;
         return sb.ToString();
     }
 }

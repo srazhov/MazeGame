@@ -4,9 +4,12 @@ namespace MazeGame.Game;
 
 public interface IMaze
 {
-    CellBase[,] GetCurrentMaze();
+    int XSize();
+    int YSize();
 
-    void MovePlayer(ConsoleKey key);
+    CellBase this[int x, int y] { get; }
+
+    bool TryMovePlayer(ConsoleKey? key);
 
     bool IsFinished();
 
