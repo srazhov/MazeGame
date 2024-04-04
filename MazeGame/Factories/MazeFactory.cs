@@ -9,7 +9,11 @@ public static class MazeFactory
 {
     public static IScreen CreateMazeScreen(MazeSettings mazeSettings)
     {
-        var maze = new Maze(mazeSettings);
+        var mazeMiner = new MazeMiner(mazeSettings);
+
+        var generatedMaze = mazeMiner.MakeMaze();
+
+        var maze = new Maze(mazeSettings, generatedMaze);
 
         return new MazeScreen(maze);
     }

@@ -9,19 +9,11 @@ public class Maze : IMaze
     private Player Player { get; }
     private CellBase[,] CurrentMaze { get; set; }
 
-    public Maze(MazeSettings settings)
+    public Maze(MazeSettings settings, CellBase[,] generatedMaze)
     {
         Settings = settings;
-        Player = new Player(0, 0);
-        CurrentMaze = new CellBase[Settings.SizeY, Settings.SizeX];
-
-        for (int y = 0; y < Settings.SizeY; y++)
-        {
-            for (int x = 0; x < Settings.SizeX; x++)
-            {
-                CurrentMaze[y, x] = new Cells.Path(x, y);
-            }
-        }
+        Player = new Player(settings.PlayerFirstCoordinates.Item1, settings.PlayerFirstCoordinates.Item2);
+        CurrentMaze = generatedMaze;
     }
 
     public int XSize()

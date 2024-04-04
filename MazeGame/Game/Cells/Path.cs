@@ -6,4 +6,9 @@ public class Path : CellBase
     {
         Symbol = '_';
     }
+
+    public override bool TryStep()
+    {
+        return true;
+    }
 }

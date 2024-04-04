@@ -8,10 +8,7 @@ public abstract class CellBase
 
     public char Symbol { get; protected set; }
 
-    public virtual bool TryStep()
-    {
-        return true;
-    }
+    public abstract bool TryStep();
 
     protected CellBase(int x, int y)
     {
