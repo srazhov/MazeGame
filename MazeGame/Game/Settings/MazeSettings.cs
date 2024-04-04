@@ -7,11 +7,11 @@ public class MazeSettings
         SizeX = sizeX;
         SizeY = sizeY;
         PlayerFirstCoordinates = new(0, 0);
-        ProbabilitiesOfCellSpan = new Dictionary<Type, double>();
+        CoinsCount = 10;
     }
 
-    public int SizeX { get; private set; }
-    public int SizeY { get; private set; }
-    public (int, int) PlayerFirstCoordinates { get; private set; }
-    public Dictionary<Type, double> ProbabilitiesOfCellSpan { get; private set; }
+    public int SizeX { get; set; }
+    public int SizeY { get; set; }
+    public (int, int) PlayerFirstCoordinates { get; set; }
+    public int CoinsCount { get; set; }
 }

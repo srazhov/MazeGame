@@ -7,7 +7,7 @@ public class Wall : CellBase
         Symbol = '#';
     }
 
-    public override bool TryStep()
+    public override bool TryStep(IMaze maze)
     {
         return false;
     }

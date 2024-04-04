@@ -8,7 +8,7 @@ public abstract class CellBase
 
     public char Symbol { get; protected set; }
 
-    public abstract bool TryStep();
+    public abstract bool TryStep(IMaze maze);
 
     protected CellBase(int x, int y)
     {

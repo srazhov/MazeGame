@@ -7,7 +7,7 @@ public class Path : CellBase
         Symbol = '_';
     }
 
-    public override bool TryStep()
+    public override bool TryStep(IMaze maze)
     {
         return true;
     }

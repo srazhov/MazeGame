@@ -32,6 +32,9 @@ public class MazeScreen : ScreenBase
             sb.AppendLine();
         }
 
+        sb.AppendLine();
+        sb.AppendLine($"Score: {Maze.GetScore()}");
+
         needsToRedrawScene = true;
         return sb.ToString();
     }

@@ -13,7 +13,7 @@ public class Player : CellBase
         Y = y;
     }
 
-    public override bool TryStep()
+    public override bool TryStep(IMaze maze)
     {
         throw new NotSupportedException("A player cannot step on itself");
     }

@@ -8,12 +8,14 @@ public class Maze : IMaze
     private MazeSettings Settings { get; }
     private Player Player { get; }
     private CellBase[,] CurrentMaze { get; set; }
+    private int Score { get; set; }
 
     public Maze(MazeSettings settings, CellBase[,] generatedMaze)
     {
         Settings = settings;
         Player = new Player(settings.PlayerFirstCoordinates.Item1, settings.PlayerFirstCoordinates.Item2);
         CurrentMaze = generatedMaze;
+        Score = 0;
     }
 
     public int XSize()
@@ -39,9 +41,14 @@ public class Maze : IMaze
         }
     }
 
+    public void AddScore(int score)
+    {
+        Score += score;
+    }
+
     public int GetScore()
     {
-        throw new NotImplementedException();
+        return Score;
     }
 
     public bool IsFinished()
@@ -71,12 +78,17 @@ public class Maze : IMaze
                 return false;
         }
 
-        if (CurrentMaze[newY, newX].TryStep())
+        if (CurrentMaze[newY, newX].TryStep(this))
         {
             Player.MoveUser(newX, newY);
             return true;
         }
 
         return false;
+    }
+
+    public void ReplaceCell(int x, int y, CellBase newCell)
+    {
+        CurrentMaze[y, x] = newCell;
     }
 }

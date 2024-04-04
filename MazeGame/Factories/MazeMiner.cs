@@ -1,5 +1,3 @@
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
 using MazeGame.Game.Cells;
 using MazeGame.Game.Settings;
 
@@ -25,6 +23,8 @@ public class MazeMiner
 
         MineMaze(MazeSettings.PlayerFirstCoordinates.Item1, MazeSettings.PlayerFirstCoordinates.Item2);
 
+        AddCoins();
+
         return GeneratedMaze;
     }
 
@@ -34,7 +34,7 @@ public class MazeMiner
 
         do
         {
-            BreakWall(minerX, minerY);
+            GeneratedMaze[minerY, minerX] = new Game.Cells.Path(minerX, minerY);
             var brokenWall = cellsAllowedToBreak.FirstOrDefault(wall => wall.X == minerX && wall.Y == minerY);
             if (brokenWall != null)
             {
@@ -53,6 +53,21 @@ public class MazeMiner
         while (cellsAllowedToBreak.Any());
     }
 
+    private void AddCoins()
+    {
+        var pathCells = (from CellBase cell in GeneratedMaze select cell)
+            .OfType<Game.Cells.Path>().ToList();
+
+        for (int i = 0; i < MazeSettings.CoinsCount; i++)
+        {
+            var randCell = GetRandomCell(pathCells);
+            if (randCell != null)
+            {
+                GeneratedMaze[randCell.Y, randCell.X] = new Coin(randCell.X, randCell.Y);
+            }
+        }
+    }
+
     private IEnumerable<CellBase> GetNearCells<T>(int x, int y) where T : CellBase
     {
         return new CellBase[]{
@@ -67,7 +82,7 @@ public class MazeMiner
         }.Where(x => x != null).OfType<T>();
     }
 
-    private CellBase? GetRandomCell(List<CellBase> cells)
+    private CellBase? GetRandomCell<T>(List<T> cells) where T : CellBase
     {
         if (cells.Count == 0)
         {
@@ -76,11 +91,6 @@ public class MazeMiner
 
         var randomIndex = Rand.Next(0, cells.Count);
         return cells[randomIndex];
-    }
-
-    private void BreakWall(int x, int y)
-    {
-        GeneratedMaze[y, x] = new Game.Cells.Path(x, y);
     }
 
     private static CellBase[,] GenerateMazeFullOfWalls(int sizeX, int sizeY)
